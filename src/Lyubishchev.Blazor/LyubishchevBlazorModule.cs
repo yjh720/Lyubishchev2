@@ -17,6 +17,7 @@ using Volo.Abp.UI.Navigation;
 using Volo.Abp.Identity.Blazor.WebAssembly;
 using Volo.Abp.SettingManagement.Blazor.WebAssembly;
 using Volo.Abp.TenantManagement.Blazor.WebAssembly;
+using Blazorise;
 
 namespace Lyubishchev.Blazor;
 
@@ -63,6 +64,7 @@ public class LyubishchevBlazorModule : AbpModule
     private void ConfigureBlazorise(ServiceConfigurationContext context)
     {
         context.Services
+            .AddBlazorise()
             .AddBootstrap5Providers()
             .AddFontAwesomeIcons();
     }

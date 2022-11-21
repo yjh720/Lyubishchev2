@@ -1,0 +1,36 @@
+﻿@page "/TimePeriods"
+@using Microsoft.AspNetCore.Authorization
+@using Volo.Abp.Application.Dtos
+@using Lyubishchev.TimePeriods;
+@using Lyubishchev.Localization;
+@using Microsoft.Extensions.Localization
+@*@using Volo.Abp.AspNetCore.Components.Web*@
+@inject IStringLocalizer<LyubishchevResource> L
+@*@inject AbpBlazorMessageLocalizerHelper<LyubishchevResource> LH*@
+@inherits AbpCrudPageBase<Lyubishchev.ITimePeriodAppService,TimePeriodDto, Guid,PagedAndSortedResultRequestDto, CreateUpdateTimePeriodDto>
+
+@*<Card>
+    <CardHeader>
+        <h2>@L["Menu:TimePeriods"]</h2>
+    </CardHeader>
+    <CardBody>
+        <DataGrid TItem="TimePeriodDto"
+                  Data="Entities"
+                  ReadData=>
+
+        </DataGrid>
+    </CardBody>
+</Card>*@
+<h1>
+    yyyyy
+    
+</h1>
+<p>
+    ssssss
+</p>
+
+
+
+@code {
+
+}

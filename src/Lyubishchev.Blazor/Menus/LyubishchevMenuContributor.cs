@@ -7,6 +7,7 @@ using Volo.Abp.Account.Localization;
 using Volo.Abp.Authorization.Permissions;
 using Volo.Abp.UI.Navigation;
 using Volo.Abp.Users;
+using System.ComponentModel.DataAnnotations;
 
 namespace Lyubishchev.Blazor.Menus;
 
@@ -44,6 +45,17 @@ public class LyubishchevMenuContributor : IMenuContributor
                 icon: "fas fa-home"
             )
         );
+
+        context.Menu.AddItem(
+            new ApplicationMenuItem(
+                "Lyubishchev",
+                l["Menu:Lyubishchev"],
+                icon: ""
+                ).AddItem(
+                new ApplicationMenuItem(
+                "Lyubishchev.TimePeriods",
+                l["Menu:TimePeriods"],
+                url: "/TimePeriods")));
 
         return Task.CompletedTask;
     }
