@@ -55,7 +55,7 @@ public class LyubishchevMenuContributor : IMenuContributor
                 new ApplicationMenuItem(
                 "Lyubishchev.TimePeriods",
                 l["Menu:TimePeriods"],
-                url: "/TimePeriods")));
+                url: "/timePeriods")));
 
         return Task.CompletedTask;
     }
