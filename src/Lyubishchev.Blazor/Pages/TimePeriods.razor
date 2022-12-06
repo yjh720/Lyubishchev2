@@ -10,22 +10,41 @@
 @*@inject AbpBlazorMessageLocalizerHelper<LyubishchevResource> LH*@
 @inherits AbpCrudPageBase<Lyubishchev.ITimePeriodAppService,TimePeriodDto, Guid,PagedAndSortedResultRequestDto, CreateUpdateTimePeriodDto>
 
-@*<Card>
+<Card>
     <CardHeader>
         <h2>@L["Menu:TimePeriods"]</h2>
     </CardHeader>
     <CardBody>
         <DataGrid TItem="TimePeriodDto"
                   Data="Entities"
-                  ReadData=>
-
+                  ReadData="OnDataGridReadAsync"
+                  TotalItems="TotalCount"
+                  ShowPager="true"
+                  PageSize="PageSize">
+            <DataGridColumns>
+                <DataGridColumn TItem="TimePeriodDto"
+                                Field="@nameof(TimePeriodDto.Start)"
+                                Caption="@L["Start"]">
+                                <DisplayTemplate>
+                        @context.Start.ToShortTimeString()
+                                </DisplayTemplate>
+                </DataGridColumn>
+                <DataGridColumn TItem="TimePeriodDto"
+                                Field="@nameof(TimePeriodDto.End)"
+                                Caption="@L["End"]">
+                                <DisplayTemplate>
+                                    @context.End.ToShortTimeString()
+                                </DisplayTemplate>
+                </DataGridColumn>
+                                
+            </DataGridColumns>
         </DataGrid>
     </CardBody>
-</Card>*@
+</Card>
 
 <h1>
     yyyyy
-    
+
 </h1>
 <p>
     ssssss

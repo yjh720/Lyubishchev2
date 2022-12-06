@@ -5,6 +5,9 @@
     "Menu:Lyubishchev": "Lyubishchev",
     "Menu:TimePeriods": "TimePeriods",
     "Welcome": "Welcome",
-    "LongWelcomeMessage": "Welcome to the application. This is a startup project based on the ABP framework. For more information, visit abp.io."
+    "LongWelcomeMessage": "Welcome to the application. This is a startup project based on the ABP framework. For more information, visit abp.io.",
+    "Start": "Start",
+    "End": "End",
+    "Note": "Note"
   }
 }
