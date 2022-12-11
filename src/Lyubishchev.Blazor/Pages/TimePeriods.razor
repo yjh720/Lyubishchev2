@@ -104,8 +104,7 @@
                     </Field>
                     <Field>
                         <FieldLabel>@L["TimePeriod_Note"]</FieldLabel>
-                        <MemoEdit Rows="5" @bind-Time="NewEntity.Note" />
-                        @*<Markdown @bind-Value = "NewEntity.Note"/>*@
+                        <MemoEdit Rows="5" @bind-Time="NewEntity.Note" />                 
                     </Field>
                 </Validations>
             </ModalBody>
@@ -124,7 +123,7 @@
         </Form>
     </ModalContent>
 </Modal>
-
+@*<Markdown/>*@
 
 
 @code {
