@@ -7,13 +7,24 @@
 @using Volo.Abp.BlazoriseUI
 @*@using Volo.Abp.AspNetCore.Components.Web*@
 @inject IStringLocalizer<LyubishchevResource> L
-@*@inject AbpBlazorMessageLocalizerHelper<LyubishchevResource> LH*@
+@inject AbpBlazorMessageLocalizerHelper<LyubishchevResource> LH
 @inherits AbpCrudPageBase<Lyubishchev.ITimePeriodAppService,TimePeriodDto, Guid,PagedAndSortedResultRequestDto, CreateUpdateTimePeriodDto>
 
 <Card>
     <CardHeader>
-        <h2>@L["Menu:TimePeriods"]</h2>
+        <Row Class="justify-content-between">
+            <Column ColumnSize="ColumnSize.IsAuto">
+                <h2>@L["Menu:TimePeriods"]</h2>
+            </Column>
+            <Column ColumnSize="ColumnSize.IsAuto">
+                <Button Color="Color.Primary"
+                        Clicked="OpenCreateModalAsync">
+                    @L["TimePeriod_NewTimePeriod"]
+                </Button>
+            </Column>
+        </Row>
     </CardHeader>
+
     <CardBody>
         <DataGrid TItem="TimePeriodDto"
                   Data="Entities"
@@ -22,34 +33,106 @@
                   ShowPager="true"
                   PageSize="PageSize">
             <DataGridColumns>
+                <DataGridEntityActionsColumn TItem="TimePeriodDto" @ref="@EntityActionsColumn">
+                    <DisplayTemplate>
+                        <EntityActions TItem="TimePeriodDto" EntityActionsColumn="@EntityActionsColumn">
+                            <EntityAction TItem="TimePeriodDto"
+                                          Text="@L["Edit"]"
+                                          Clicked="()=>OpenEditModalAsync(context)">
+                            </EntityAction>
+                        </EntityActions>
+                    </DisplayTemplate>
+                </DataGridEntityActionsColumn>
+                <DataGridColumn TItem="TimePeriodDto"
+                                Field="@nameof(TimePeriodDto.Name)"
+                                Caption="@L["TimePeriod_Name"]"
+                                Editable="true">
+                </DataGridColumn>
                 <DataGridColumn TItem="TimePeriodDto"
                                 Field="@nameof(TimePeriodDto.Start)"
-                                Caption="@L["Start"]">
-                                <DisplayTemplate>
+                                Caption="@L["TimePeriod_Start"]"
+                                Editable="true">
+                    <DisplayTemplate>
                         @context.Start.ToShortTimeString()
-                                </DisplayTemplate>
+                    </DisplayTemplate>
                 </DataGridColumn>
                 <DataGridColumn TItem="TimePeriodDto"
                                 Field="@nameof(TimePeriodDto.End)"
-                                Caption="@L["End"]">
-                                <DisplayTemplate>
-                                    @context.End.ToShortTimeString()
-                                </DisplayTemplate>
+                                Caption="@L["TimePeriod_End"]"
+                                Editable="true">
+                    <DisplayTemplate>
+                        @context.End.ToShortTimeString()
+                    </DisplayTemplate>
                 </DataGridColumn>
-                                
+                <DataGridColumn TItem="TimePeriodDto"
+                                Field="@nameof(TimePeriodDto.Note)"
+                                Caption="@L["TimePeriod_Note"]"
+                                Editable="true">
+                </DataGridColumn>
             </DataGridColumns>
         </DataGrid>
     </CardBody>
 </Card>
 
-<h1>
+<Modal @ref="@CreateModal">
+    @*    <ModalBackdrop/>*@
+    <ModalContent IsCentered="true">
+        <Form>
+            <ModalHeader>
+                <ModalTitle>@L["TimePeriod_NewTimePeriod"]</ModalTitle>
+                <CloseButton Clicked="CloseCreateModalAsync" />
+            </ModalHeader>
+            <ModalBody>
+                <Validations @ref="@CreateValidationsRef" Model="@NewEntity" ValidateOnLoad="false">
+                    <Validation MessageLocalizer="@LH.Localize">
+                        <Field>
+                            <FieldLabel>@L["TimePeriod_Name"]</FieldLabel>
+                            <TextEdit @bind-Text="@NewEntity.Name">
+                                <Feedback>
+                                    <ValidationError />
+                                </Feedback>
+                            </TextEdit>
+                        </Field>
+                    </Validation>
+                    <Field>
+                        <FieldLabel>@L["TimePeriod_Start"]</FieldLabel>
+                        <TimeEdit TValue="DateTime" @bind-Time="NewEntity.Start" />
+                    </Field>
+                    <Field>
+                        <FieldLabel>@L["TimePeriod_End"]</FieldLabel>
+                        <TimeEdit TValue="DateTime" @bind-Time="NewEntity.End" />
+                    </Field>
+                    <Field>
+                        <FieldLabel>@L["TimePeriod_Note"]</FieldLabel>
+                        <MemoEdit Rows="5" @bind-Time="NewEntity.Note" />
+                        @*<Markdown @bind-Value = "NewEntity.Note"/>*@
+                    </Field>
+                </Validations>
+            </ModalBody>
+            <ModalFooter>
+                <Button Color="Color.Secondary"
+                        Clicked="CloseCreateModalAsync">
+                    @L["Cancel"]
+                </Button>
+                <Button Color="Color.Primary"
+                        Type="@ButtonType.Submit"
+                        PreventDefaultOnSubmit="true"
+                        Clicked="CreateEntityAsync">
+                    @L["Save"]
+                </Button>
+            </ModalFooter>
+        </Form>
+    </ModalContent>
+</Modal>
+
+@*<h1>
     yyyyy
 
 </h1>
 <p>
     ssssss
 </p>
-
+*@
 
 
 @code {

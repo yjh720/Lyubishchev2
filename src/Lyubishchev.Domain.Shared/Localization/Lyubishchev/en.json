@@ -6,8 +6,17 @@
     "Menu:TimePeriods": "TimePeriods",
     "Welcome": "Welcome",
     "LongWelcomeMessage": "Welcome to the application. This is a startup project based on the ABP framework. For more information, visit abp.io.",
-    "Start": "Start",
-    "End": "End",
-    "Note": "Note"
+
+    //timePeriod Page
+    "TimePeriod_NewTimePeriod": "New TimePeriod",
+    "TimePeriod_Name": "Name",
+    "TimePeriod_Start": "Start",
+    "TimePeriod_End": "End",
+    "TimePeriod_Note": "Note",
+
+    //generic
+    "Cancel": "Cancel",
+    "Save": "Save",
+    "Edit": "Edit",
   }
 }

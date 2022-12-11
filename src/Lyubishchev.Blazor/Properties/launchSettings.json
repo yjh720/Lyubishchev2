@@ -34,6 +34,10 @@
         "ASPNETCORE_URLS": "https://localhost:44325"
       },
       "distributionName": ""
+    },
+    "dotnet": {
+      "commandName": "Project",
+      "hotReloadProfile": "aspnetcore"
     }
   }
 }
