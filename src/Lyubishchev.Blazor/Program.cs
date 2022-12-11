@@ -1,6 +1,10 @@
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 
+using Blazorise;
+using Blazorise.Bootstrap5;
+using Blazorise.Icons.FontAwesome;
+
 namespace Lyubishchev.Blazor;
 
 public class Program

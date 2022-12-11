@@ -74,8 +74,9 @@
     </CardBody>
 </Card>
 
+
 <Modal @ref="@CreateModal">
-        <ModalBackdrop/>
+    <ModalBackdrop />
     <ModalContent IsCentered="true">
         <Form>
             <ModalHeader>
@@ -104,7 +105,13 @@
                     </Field>
                     <Field>
                         <FieldLabel>@L["TimePeriod_Note"]</FieldLabel>
-                        <MemoEdit Rows="5" @bind-Time="NewEntity.Note" />                 
+                        <MemoEdit Rows="5" @bind-Time="NewEntity.Note" />
+@*                        <Markdown>
+                            <Toolbar>
+
+                            </Toolbar>
+                        </Markdown>*@
+
                     </Field>
                 </Validations>
             </ModalBody>
@@ -123,7 +130,8 @@
         </Form>
     </ModalContent>
 </Modal>
-@*<Markdown/>*@
+
+
 
 
 @code {

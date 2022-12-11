@@ -63,10 +63,18 @@ public class LyubishchevBlazorModule : AbpModule
 
     private void ConfigureBlazorise(ServiceConfigurationContext context)
     {
+
         context.Services
-            .AddBlazorise()
+            .AddBlazorise(options =>
+            {
+                options.Immediate = true;
+            })
             .AddBootstrap5Providers()
             .AddFontAwesomeIcons();
+        //context.Services
+        //    .AddBlazorise()
+        //    .AddBootstrap5Providers()
+        //    .AddFontAwesomeIcons();
     }
 
     private static void ConfigureAuthentication(WebAssemblyHostBuilder builder)
