@@ -17,6 +17,14 @@
     //generic
     "Cancel": "Cancel",
     "Save": "Save",
-    "Edit": "Edit"
+    "Edit": "Edit",
+    "Delete": "Delete",
+
+    //Permission
+    "Permission:Lyubishchev": "Lyubishchev",
+    "Permission:TimePeriods": "TimePeriod Management",
+    "Permission:TimePeriods.Create": "Creating new timePeriods",
+    "Permission:TimePeriods.Edit": "Editing the timePeriods",
+    "Permission:TimePeriods.Delete": "Deleting the timePeriods"
   }
 }

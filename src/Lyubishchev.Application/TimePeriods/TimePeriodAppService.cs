@@ -1,4 +1,5 @@
 ﻿using Lyubishchev.Domain.TimePeriods;
+using Lyubishchev.Permissions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,7 +20,11 @@ namespace Lyubishchev.TimePeriods
     {
         public TimePeriodAppService(IRepository<TimePeriod, Guid> repository) : base(repository)
         {
-
+            GetPolicyName = LyubishchevPermissions.TimePeriods.Default;
+            GetListPolicyName = LyubishchevPermissions.TimePeriods.Default;
+            CreatePolicyName = LyubishchevPermissions.TimePeriods.Create;
+            UpdatePolicyName = LyubishchevPermissions.TimePeriods.Edit;
+            DeletePolicyName = LyubishchevPermissions.TimePeriods.Delete;
         }
     }
 }

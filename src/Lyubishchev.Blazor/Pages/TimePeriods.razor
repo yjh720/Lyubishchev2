@@ -1,4 +1,6 @@
 ﻿@page "/timePeriods"
+@attribute [Authorize(LyubishchevPermissions.TimePeriods.Default)]
+@using Lyubishchev.Permissions
 @using Microsoft.AspNetCore.Authorization
 @using Volo.Abp.Application.Dtos
 @using Lyubishchev.TimePeriods;
@@ -17,10 +19,13 @@
                 <h2>@L["Menu:TimePeriods"]</h2>
             </Column>
             <Column ColumnSize="ColumnSize.IsAuto">
-                <Button Color="Color.Primary"
+                @if (HasCreatePermission)
+                {
+                    <Button Color="Color.Primary"
                         Clicked="OpenCreateModalAsync">
-                    @L["TimePeriod_NewTimePeriod"]
-                </Button>
+                        @L["TimePeriod_NewTimePeriod"]
+                    </Button>
+                }
             </Column>
         </Row>
     </CardHeader>
@@ -38,7 +43,14 @@
                         <EntityActions TItem="TimePeriodDto" EntityActionsColumn="@EntityActionsColumn">
                             <EntityAction TItem="TimePeriodDto"
                                           Text="@L["Edit"]"
+                                          Visible="@HasUpdatePermission"
                                           Clicked="()=>OpenEditModalAsync(context)">
+                            </EntityAction>
+                            <EntityAction TItem="TimePeriodDto"
+                                          Text="@L["Delete"]"
+                                          Visible="@HasDeletePermission"
+                                          Clicked="()=> DeleteEntityAsync(context)"
+                                          ConfirmationMessage="()=>GetDeleteConfirmationMessage(context)">
                             </EntityAction>
                         </EntityActions>
                     </DisplayTemplate>
@@ -105,11 +117,11 @@
                     </Field>
                     <Field>
                         <FieldLabel>@L["TimePeriod_Note"]</FieldLabel>
-                        <MemoEdit Rows="5" @bind-Time="NewEntity.Note" />
-@*                        <Markdown>
-                            <Toolbar>
+                        <MemoEdit Rows="5" @bind-Text="NewEntity.Note" />
+                        @*                        <Markdown>
+                        <Toolbar>
 
-                            </Toolbar>
+                        </Toolbar>
                         </Markdown>*@
 
                     </Field>
@@ -131,9 +143,61 @@
     </ModalContent>
 </Modal>
 
+<Modal @ref="@EditModal">
+    <ModalBackdrop />
+    <ModalContent IsCentered="true">
+        <Form>
+            <ModalHeader>
+                <ModalTitle>@EditingEntity.Name</ModalTitle>
+                <CloseButton Clicked="CloseEditModalAsync" />
+            </ModalHeader>
+            <ModalBody>
+                <Validations @ref="@EditValidationsRef" Model="@NewEntity" ValidateOnLoad="false">
+                    <Validation MessageLocalizer="@LH.Localize">
+                        <Field>
+                            <FieldLabel>@L["TimePeriod_Name"]</FieldLabel>
+                            <TextEdit @bind-Text="@EditingEntity.Name">
+                                <Feedback>
+                                    <ValidationError />
+                                </Feedback>
+                            </TextEdit>
+                        </Field>
+                    </Validation>
+                    <Field>
+                        <FieldLabel>@L["TimePeriod_Start"]</FieldLabel>
+                        <TimeEdit TValue="DateTime" @bind-Time="EditingEntity.Start" />
+                    </Field>
+                    <Field>
+                        <FieldLabel>@L["TimePeriod_End"]</FieldLabel>
+                        <TimeEdit TValue="DateTime" @bind-Time="EditingEntity.End" />
+                    </Field>
+                    <Field>
+                        <FieldLabel>@L["TimePeriod_Note"]</FieldLabel>
+                        <MemoEdit Rows="5" @bind-Text="EditingEntity.Note" />
+                    </Field>
+                </Validations>
+            </ModalBody>
+            <ModalFooter>
+                <Button Color="Color.Secondary"
+                        Clicked="CloseEditModalAsync">
+                    @L["Cancel"]
+                </Button>
+                <Button Color="Color.Primary"
+                        Type="@ButtonType.Submit"
+                        PreventDefaultOnSubmit="true"
+                        Clicked="UpdateEntityAsync">@L["Save"]</Button>
+            </ModalFooter>
+        </Form>
+    </ModalContent>
+</Modal>
 
 
 
 @code {
-
+    public TimePeriods()
+    {
+        CreatePolicyName = LyubishchevPermissions.TimePeriods.Create;
+        UpdatePolicyName = LyubishchevPermissions.TimePeriods.Edit;
+        DeletePolicyName = LyubishchevPermissions.TimePeriods.Delete;
+    }
 }
