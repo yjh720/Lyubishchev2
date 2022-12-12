@@ -13,6 +13,7 @@
     "TimePeriod_Start": "Start",
     "TimePeriod_End": "End",
     "TimePeriod_Note": "Note",
+    "TimePeriod_Date": "Date",
 
     //generic
     "Cancel": "Cancel",

@@ -56,6 +56,14 @@
                     </DisplayTemplate>
                 </DataGridEntityActionsColumn>
                 <DataGridColumn TItem="TimePeriodDto"
+                                Field="@nameof(TimePeriodDto.Start)"
+                                Caption="@L["TimePeriod_Date"]"
+                                Editable="true">
+                    <DisplayTemplate>
+                                    @context.Start.ToShortDateString()
+                    </DisplayTemplate>
+                </DataGridColumn>
+                <DataGridColumn TItem="TimePeriodDto"
                                 Field="@nameof(TimePeriodDto.Name)"
                                 Caption="@L["TimePeriod_Name"]"
                                 Editable="true">
@@ -185,7 +193,9 @@
                 <Button Color="Color.Primary"
                         Type="@ButtonType.Submit"
                         PreventDefaultOnSubmit="true"
-                        Clicked="UpdateEntityAsync">@L["Save"]</Button>
+                        Clicked="UpdateEntityAsync">
+                    @L["Save"]
+                </Button>
             </ModalFooter>
         </Form>
     </ModalContent>
