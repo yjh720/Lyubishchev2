@@ -19,5 +19,10 @@ namespace Lyubishchev.TimePeriods
         [DataType(DataType.Date)]
         public DateTime End { get; set; }
         public string Note { get; set; }
+        public CreateUpdateTimePeriodDto()
+        {
+            Start = DateTime.Now;
+            End = DateTime.Now.AddHours(1);
+        }
     }
 }

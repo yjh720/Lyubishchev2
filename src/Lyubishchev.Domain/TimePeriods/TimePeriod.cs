@@ -21,6 +21,7 @@ namespace Lyubishchev.Domain.TimePeriods
         public TimePeriod()
         {
             Start = DateTime.Now;
+            End = DateTime.Now.AddHours(1);
         }
 
         public TimeSpan GetTimeSpan()

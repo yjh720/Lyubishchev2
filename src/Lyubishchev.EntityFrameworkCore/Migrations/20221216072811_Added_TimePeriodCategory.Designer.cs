@@ -3,6 +3,7 @@ using System;
 using Lyubishchev.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Volo.Abp.EntityFrameworkCore;
 
@@ -11,9 +12,10 @@ using Volo.Abp.EntityFrameworkCore;
 namespace Lyubishchev.Migrations
 {
     [DbContext(typeof(LyubishchevDbContext))]
-    partial class LyubishchevDbContextModelSnapshot : ModelSnapshot
+    [Migration("20221216072811_Added_TimePeriodCategory")]
+    partial class Added_TimePeriodCategory
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

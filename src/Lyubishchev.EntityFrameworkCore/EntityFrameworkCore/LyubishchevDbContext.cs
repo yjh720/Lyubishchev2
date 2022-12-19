@@ -1,5 +1,6 @@
 ﻿using Lyubishchev.Domain;
 using Lyubishchev.Domain.TimePeriods;
+using Lyubishchev.TimePeriodCategories;
 using Microsoft.EntityFrameworkCore;
 using Volo.Abp.AuditLogging.EntityFrameworkCore;
 using Volo.Abp.BackgroundJobs.EntityFrameworkCore;
@@ -28,6 +29,7 @@ public class LyubishchevDbContext :
 {
     /* Add DbSet properties for your Aggregate Roots / Entities here. */
     public DbSet<TimePeriod> TimePeriods { get; set; }
+    public DbSet<TimePeriodCategory> TimePeriodCategories { get; set; }
     #region Entities from the modules
 
     /* Notice: We only implemented IIdentityDbContext and ITenantManagementDbContext
@@ -90,6 +92,14 @@ public class LyubishchevDbContext :
             t.ToTable(TimePeriodConsts.DbTablePrefix + "TimePeriod", TimePeriodConsts.DbSchema);
             t.ConfigureByConvention();
             t.Property(x => x.Name).IsRequired().HasMaxLength(128);
+        });
+
+        builder.Entity<TimePeriodCategory>(tc =>
+        {
+            tc.ToTable(TimePeriodConsts.DbTablePrefix + "TimePeriodCategory", TimePeriodConsts.DbSchema);
+            tc.ConfigureByConvention();
+            tc.Property(x => x.Name).IsRequired().HasMaxLength(TimePeriodCategoryConsts.MaxNameLength);
+            tc.HasIndex(x => x.Name);
         });
     }
 }

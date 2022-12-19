@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using JetBrains.Annotations;
 using Lyubishchev.Domain.TimePeriods;
+using Lyubishchev.TimePeriodCategories;
 using Lyubishchev.TimePeriods;
 using Volo.Abp.AutoMapper;
 
@@ -17,5 +18,7 @@ public class LyubishchevApplicationAutoMapperProfile : Profile
 
         CreateMap<TimePeriod, TimePeriodDto>();
         CreateMap<CreateUpdateTimePeriodDto, TimePeriod>();
+
+        CreateMap<TimePeriodCategory, TimePeriodCategoryDto>();
     }
 }

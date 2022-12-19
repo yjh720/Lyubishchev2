@@ -1,4 +1,6 @@
-﻿namespace Lyubishchev.Permissions;
+﻿using Volo.Abp.Validation.StringValues;
+
+namespace Lyubishchev.Permissions;
 
 public static class LyubishchevPermissions
 {
@@ -9,6 +11,14 @@ public static class LyubishchevPermissions
     public static class TimePeriods
     {
         public const string Default = GroupName + ".TimePeriods";
+        public const string Create = Default + ".Create";
+        public const string Edit = Default + ".Edit";
+        public const string Delete = Default + ".Delete";
+    }
+
+    public static class TimePeriodCategories
+    {
+        public const string Default = GroupName + ".TimePeriodCategories";
         public const string Create = Default + ".Create";
         public const string Edit = Default + ".Edit";
         public const string Delete = Default + ".Delete";

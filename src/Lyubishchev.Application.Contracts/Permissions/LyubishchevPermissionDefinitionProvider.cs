@@ -15,6 +15,15 @@ public class LyubishchevPermissionDefinitionProvider : PermissionDefinitionProvi
         timePeriodsPermission.AddChild(LyubishchevPermissions.TimePeriods.Create, L("Permission:TimePeriods.Create"));
         timePeriodsPermission.AddChild(LyubishchevPermissions.TimePeriods.Edit, L("Permission:TimePeriods.Edit"));
         timePeriodsPermission.AddChild(LyubishchevPermissions.TimePeriods.Delete, L("Permission:TimePeriods.Delete"));
+
+        var timePeriodCategoryPermission = lyubishchevGroup.AddPermission(
+            LyubishchevPermissions.TimePeriodCategories.Default, L("Permission:TimePeriodCategories"));
+        timePeriodCategoryPermission.AddChild(
+            LyubishchevPermissions.TimePeriodCategories.Create, L("Permission:TimePeriodCategories.Create"));
+        timePeriodCategoryPermission.AddChild(
+            LyubishchevPermissions.TimePeriodCategories.Edit, L("Permission:TimePeriodCategories.Edit"));
+        timePeriodCategoryPermission.AddChild(
+            LyubishchevPermissions.TimePeriodCategories.Delete, L("Permission:TimePeriodCategories.Delete"));
     }
 
     private static LocalizableString L(string name)

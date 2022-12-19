@@ -8,6 +8,7 @@ using Volo.Abp.Authorization.Permissions;
 using Volo.Abp.UI.Navigation;
 using Volo.Abp.Users;
 using System.ComponentModel.DataAnnotations;
+using Lyubishchev.Permissions;
 
 namespace Lyubishchev.Blazor.Menus;
 
@@ -32,7 +33,7 @@ public class LyubishchevMenuContributor : IMenuContributor
         }
     }
 
-    private Task ConfigureMainMenuAsync(MenuConfigurationContext context)
+    private async Task ConfigureMainMenuAsync(MenuConfigurationContext context)
     {
         var l = context.GetLocalizer<LyubishchevResource>();
 
@@ -57,7 +58,14 @@ public class LyubishchevMenuContributor : IMenuContributor
                 l["Menu:TimePeriods"],
                 url: "/timePeriods")));
 
-        return Task.CompletedTask;
+        if (await context.IsGrantedAsync(LyubishchevPermissions.TimePeriodCategories.Default))
+        {
+            context.Menu.AddItem(new ApplicationMenuItem(
+                "Lyubishchev.TimePeriodCategory",
+                l["Menu:TimePeriodCategories"],
+                url: "/timePeriodCategories"
+                ));
+        }
     }
 
     private Task ConfigureUserMenuAsync(MenuConfigurationContext context)

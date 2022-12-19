@@ -116,17 +116,22 @@
                         </Field>
                     </Validation>
                     <Field>
+                        <FieldLabel>@L["TimePeriod_Date"]</FieldLabel>
+                        <DateEdit TValue="DateTime" Placeholder="@DateTime.Now.ToString("m")" @bind-Date="NewEntity.Start" />
+                    </Field>
+                    <Field>
                         <FieldLabel>@L["TimePeriod_Start"]</FieldLabel>
-                        <TimeEdit TValue="DateTime" @bind-Time="NewEntity.Start" />
+                        <TimeEdit TValue="DateTime" Placeholder="@DateTime.Now.ToString("t")" @bind-Time="NewEntity.Start" />
                     </Field>
                     <Field>
                         <FieldLabel>@L["TimePeriod_End"]</FieldLabel>
-                        <TimeEdit TValue="DateTime" @bind-Time="NewEntity.End" />
+                        <TimeEdit TValue="DateTime" Placeholder="@DateTime.Now.AddHours(1).ToString("t")" @bind-Time="NewEntity.End" />
                     </Field>
                     <Field>
                         <FieldLabel>@L["TimePeriod_Note"]</FieldLabel>
                         <MemoEdit Rows="5" @bind-Text="NewEntity.Note" />
-                        @*                        <Markdown>
+
+                        @*<Markdown>
                         <Toolbar>
 
                         </Toolbar>

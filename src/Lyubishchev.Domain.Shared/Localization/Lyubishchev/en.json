@@ -4,6 +4,7 @@
     "Menu:Home": "Home",
     "Menu:Lyubishchev": "Lyubishchev",
     "Menu:TimePeriods": "TimePeriods",
+    "Menu:TimePeriodCategories": "TimePeriodCategories",
     "Welcome": "Welcome",
     "LongWelcomeMessage": "Welcome to the application. This is a startup project based on the ABP framework. For more information, visit abp.io.",
 
@@ -15,7 +16,15 @@
     "TimePeriod_Note": "Note",
     "TimePeriod_Date": "Date",
 
+    //timePeriodCategory Page
+    "TimePeriodCategory": "TimePeriodCategory",
+    "TimePeriodCategory_NewTimePeriodCategory": "New TimePeriodCategory",
+    "TimePeriodCategory_Name": "Name",
+    "TimePeriodCategory_Description": "Description",
+    "TimePeriodCategory_DeletionConfirmationMessage": "Are you sure to delete the timePeriodCategory '{0}'?",
+
     //generic
+    "Actions": "Actions",
     "Cancel": "Cancel",
     "Save": "Save",
     "Edit": "Edit",
@@ -23,9 +32,18 @@
 
     //Permission
     "Permission:Lyubishchev": "Lyubishchev",
+
     "Permission:TimePeriods": "TimePeriod Management",
     "Permission:TimePeriods.Create": "Creating new timePeriods",
     "Permission:TimePeriods.Edit": "Editing the timePeriods",
-    "Permission:TimePeriods.Delete": "Deleting the timePeriods"
+    "Permission:TimePeriods.Delete": "Deleting the timePeriods",
+
+    "Permission:TimePeriodCategories": "TimePeriodCategory Management",
+    "Permission:TimePeriodCategories.Create": "Creating new timePeriodCategories",
+    "Permission:TimePeriodCategories.Edit": "Editing the timePeriodCategories",
+    "Permission:TimePeriodCategories.Delete": "Deleting the timePeriodCategories",
+
+    //exception
+    "Lyubishchev:00001": "There is already a time period category with the same name: {name}"
   }
 }
