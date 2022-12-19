@@ -47,25 +47,43 @@ public class LyubishchevMenuContributor : IMenuContributor
             )
         );
 
-        context.Menu.AddItem(
+        var lyubishchevMenu = new ApplicationMenuItem(
+            "Lyubishchev",
+            l["Menu:Lyubishchev"],
+            icon: "");
+
+        lyubishchevMenu.AddItem(
             new ApplicationMenuItem(
-                "Lyubishchev",
-                l["Menu:Lyubishchev"],
-                icon: ""
-                ).AddItem(
-                new ApplicationMenuItem(
                 "Lyubishchev.TimePeriods",
                 l["Menu:TimePeriods"],
-                url: "/timePeriods")));
+                url: "/timePeriods"));
+
+        //context.Menu.AddItem(
+        //    new ApplicationMenuItem(
+        //        "Lyubishchev",
+        //        l["Menu:Lyubishchev"],
+        //        icon: ""
+        //        ).AddItem(
+        //        new ApplicationMenuItem(
+        //        "Lyubishchev.TimePeriods",
+        //        l["Menu:TimePeriods"],
+        //        url: "/timePeriods")));
 
         if (await context.IsGrantedAsync(LyubishchevPermissions.TimePeriodCategories.Default))
         {
-            context.Menu.AddItem(new ApplicationMenuItem(
+            //context.Menu.AddItem(new ApplicationMenuItem(
+            //    "Lyubishchev.TimePeriodCategory",
+            //    l["Menu:TimePeriodCategories"],
+            //    url: "/timePeriodCategories"
+            //    ));
+            lyubishchevMenu.AddItem(new ApplicationMenuItem(
                 "Lyubishchev.TimePeriodCategory",
                 l["Menu:TimePeriodCategories"],
                 url: "/timePeriodCategories"
                 ));
         }
+
+        context.Menu.AddItem(lyubishchevMenu);
     }
 
     private Task ConfigureUserMenuAsync(MenuConfigurationContext context)

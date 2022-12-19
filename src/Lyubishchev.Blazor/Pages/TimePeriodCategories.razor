@@ -34,7 +34,7 @@
             <DataGridColumns>
                 <DataGridColumn Width="150px"
                                 TItem="TimePeriodCategoryDto"
-                                Field="@nameof(TimePeriodCategoryDto)"
+                                Field="@nameof(TimePeriodCategoryDto.Id)"
                                 Sortable="false"
                                 Caption="@L["Actions"]">
                     <DisplayTemplate>
@@ -120,6 +120,53 @@
         </Form>
     </ModalContent>
 </Modal>
+
+<Modal @ref="EditTimePeriodCategoryModal">
+    <ModalBackdrop/>
+    <ModalContent IsCentered="true">
+        <Form>
+            <ModalHeader>
+                <ModalTitle>@EditingTimePeriodCategory.Name</ModalTitle>
+                <CloseButton Clicked="CloseEditTimePeriodCategoryModal"/>
+            </ModalHeader>
+            <ModalBody>
+                <Validations @ref="@EditValidationsRef" Model="@EditingTimePeriodCategory" ValidateOnLoad="false">
+                    <Validation MessageLocalizer="@LH.Localize">
+                        <Field>
+                            <FieldLabel>@L["TimePeriodCategory_Name"]</FieldLabel>
+                            <TextEdit @bind-Text="@EditingTimePeriodCategory.Name">
+                                <Feedback>
+                                    <ValidationError/>
+                                </Feedback>
+                            </TextEdit>
+                        </Field>
+                    </Validation>
+                    <Field>
+                        <FieldLabel>@L["TimePeriodCategory_Description"]</FieldLabel>
+                        <MemoEdit Rows="5" @bind-Text="EditingTimePeriodCategory.Description">
+                            <Feedback>
+                                <ValidationError/>
+                            </Feedback>
+                        </MemoEdit>
+                    </Field>
+                </Validations>
+            </ModalBody>
+            <ModalFooter>
+                <Button Color="Color.Secondary"
+                        Clicked="CloseEditTimePeriodCategoryModal">
+                    @L["Cancel"]
+                </Button>
+                <Button Color="Color.Primary"
+                        Type="@ButtonType.Submit"
+                        PreventDefaultOnSubmit="true"
+                        Clicked="UpdateTimePeriodCategoryAsync">
+                    @L["Save"]
+                </Button>
+            </ModalFooter>
+        </Form>
+    </ModalContent>
+</Modal>
+
 @code {
 
 }
