@@ -15,6 +15,7 @@ namespace Lyubishchev.Domain.TimePeriods
         public DateTime Start { get; set; }
         public DateTime End { get; set; }
         public string Note { get; set; }
+        public Guid CategoryId { get; set; }
         //Tag like work, study, read
         //dynamiclly add Enum
         //public List<string> Tag { get; set; } = new List<string> { "management", "recruitment"};

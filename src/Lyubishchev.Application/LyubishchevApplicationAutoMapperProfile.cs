@@ -20,5 +20,6 @@ public class LyubishchevApplicationAutoMapperProfile : Profile
         CreateMap<CreateUpdateTimePeriodDto, TimePeriod>();
 
         CreateMap<TimePeriodCategory, TimePeriodCategoryDto>();
+        CreateMap<TimePeriodCategory, TimePeriodCategoryLookupDto>();
     }
 }

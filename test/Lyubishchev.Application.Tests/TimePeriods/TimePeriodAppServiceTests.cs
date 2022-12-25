@@ -8,15 +8,18 @@ using Volo.Abp.Application.Dtos;
 using Shouldly;
 using System.Diagnostics.Contracts;
 using Volo.Abp.Validation;
+using Lyubishchev.TimePeriodCategories;
 
 namespace Lyubishchev.TimePeriods
 {
     public class TimePeriodAppServiceTests : LyubishchevApplicationTestBase
     {
         private readonly ITimePeriodAppService _timePeriodAppService;
+        private readonly ITimePeriodCategoryAppService _timePeriodCategoryAppService;
         public TimePeriodAppServiceTests()
         {
             _timePeriodAppService = GetRequiredService<ITimePeriodAppService>();
+            _timePeriodCategoryAppService = GetRequiredService<ITimePeriodCategoryAppService>();
         }
 
         [Fact]
@@ -29,12 +32,16 @@ namespace Lyubishchev.TimePeriods
 
             //Assert
             result.TotalCount.ShouldBeGreaterThan(0);
-            result.Items.ShouldContain(t => t.Name == "睡觉");
+            result.Items.ShouldContain(t => t.Name == "睡觉" &&
+                                        t.CategoryName == "生活日常");
         }
 
         [Fact]
         public async Task Should_Create_A_Valid_TimePeriod()
         {
+            var categories = await _timePeriodCategoryAppService.GetListAsync(new GetTimePeriodCategoryListDto());
+            var firstCategory = categories.Items.First();
+
             //Act
             var result = await _timePeriodAppService.CreateAsync(
                 new CreateUpdateTimePeriodDto
@@ -42,9 +49,10 @@ namespace Lyubishchev.TimePeriods
                     Name = "New test timePeriod",
                     Start = DateTime.Now,
                     End = DateTime.Now.AddHours(1),
-                    Note = "Test note"
+                    Note = "Test note",
+                    CategoryId = firstCategory.Id
                 }
-                );
+                ) ;
 
             //Assert
             result.Id.ShouldNotBe(Guid.Empty);

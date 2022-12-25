@@ -56,11 +56,15 @@
                     </DisplayTemplate>
                 </DataGridEntityActionsColumn>
                 <DataGridColumn TItem="TimePeriodDto"
+                                Field="@nameof(TimePeriodDto.CategoryName)"
+                                Caption="@L["TimePeriodCategory"]">
+                </DataGridColumn>
+                <DataGridColumn TItem="TimePeriodDto"
                                 Field="@nameof(TimePeriodDto.Start)"
                                 Caption="@L["TimePeriod_Date"]"
                                 Editable="true">
                     <DisplayTemplate>
-                                    @context.Start.ToShortDateString()
+                        @context.Start.ToShortDateString()
                     </DisplayTemplate>
                 </DataGridColumn>
                 <DataGridColumn TItem="TimePeriodDto"
@@ -84,6 +88,7 @@
                         @context.End.ToShortTimeString()
                     </DisplayTemplate>
                 </DataGridColumn>
+
                 <DataGridColumn TItem="TimePeriodDto"
                                 Field="@nameof(TimePeriodDto.Note)"
                                 Caption="@L["TimePeriod_Note"]"
@@ -115,6 +120,18 @@
                             </TextEdit>
                         </Field>
                     </Validation>
+                    <Field>
+                        <FieldLabel>@L["TimePeriodCategory"]</FieldLabel>
+                        <Select TValue="Guid" @bind-SelectedValue="@NewEntity.CategoryId">
+                            <SelectItem TValue="Guid" Value="Guid.Empty" Disabled="true"> @L["PickTimePeriodCategory"]</SelectItem>
+                            @foreach (var category in timePeriodCategoryList)
+                            {
+                                <SelectItem TValue="Guid" Value="@category.Id">
+                                    @category.Name
+                                </SelectItem>
+                            }
+                        </Select>
+                    </Field>
                     <Field>
                         <FieldLabel>@L["TimePeriod_Date"]</FieldLabel>
                         <DateEdit TValue="DateTime" Placeholder="@DateTime.Now.ToString("m")" @bind-Date="NewEntity.Start" />
@@ -177,6 +194,21 @@
                         </Field>
                     </Validation>
                     <Field>
+                        <FieldLabel>@L["TimePeriodCategory"]</FieldLabel>
+                        <Select TValue="Guid" @bind-SelectedValue="@EditingEntity.CategoryId">
+                            @foreach (var category in timePeriodCategoryList)
+                            {
+                                <SelectItem TValue="Guid" Value="@category.Id">
+                                    @category.Name
+                                </SelectItem>
+                            }
+                        </Select>
+                    </Field>
+                    <Field>
+                        <FieldLabel>@L["TimePeriod_Date"]</FieldLabel>
+                        <DateEdit TValue="DateTime" Placeholder="@DateTime.Now.ToString("m")" @bind-Date="NewEntity.Start" />
+                    </Field>
+                    <Field>
                         <FieldLabel>@L["TimePeriod_Start"]</FieldLabel>
                         <TimeEdit TValue="DateTime" @bind-Time="EditingEntity.Start" />
                     </Field>
@@ -209,10 +241,19 @@
 
 
 @code {
+    IReadOnlyList<TimePeriodCategoryLookupDto> timePeriodCategoryList = Array.Empty<TimePeriodCategoryLookupDto>();
+
     public TimePeriods()
     {
         CreatePolicyName = LyubishchevPermissions.TimePeriods.Create;
         UpdatePolicyName = LyubishchevPermissions.TimePeriods.Edit;
         DeletePolicyName = LyubishchevPermissions.TimePeriods.Delete;
+    }
+
+    //Get TimePeriodCategory on initialization
+    protected override async Task OnInitializedAsync()
+    {
+        await base.OnInitializedAsync();
+        timePeriodCategoryList = (await AppService.GetTimePeriodCategoryLookupAsync()).Items;
     }
 }

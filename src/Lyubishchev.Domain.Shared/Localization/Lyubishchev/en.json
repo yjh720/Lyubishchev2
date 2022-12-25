@@ -4,7 +4,7 @@
     "Menu:Home": "Home",
     "Menu:Lyubishchev": "Lyubishchev",
     "Menu:TimePeriods": "TimePeriods",
-    "Menu:TimePeriodCategories": "TimePeriodCategories",
+    "Menu:TimePeriodCategories": "Categories",
     "Welcome": "Welcome",
     "LongWelcomeMessage": "Welcome to the application. This is a startup project based on the ABP framework. For more information, visit abp.io.",
 
@@ -17,11 +17,13 @@
     "TimePeriod_Date": "Date",
 
     //timePeriodCategory Page
-    "TimePeriodCategory": "TimePeriodCategory",
-    "TimePeriodCategory_NewTimePeriodCategory": "New TimePeriodCategory",
+    "TimePeriodCategory": "Category",
+    "TimePeriodCategory_NewTimePeriodCategory": "New Category",
     "TimePeriodCategory_Name": "Name",
     "TimePeriodCategory_Description": "Description",
     "TimePeriodCategory_DeletionConfirmationMessage": "Are you sure to delete the timePeriodCategory '{0}'?",
+
+
 
     //generic
     "Actions": "Actions",
@@ -29,6 +31,8 @@
     "Save": "Save",
     "Edit": "Edit",
     "Delete": "Delete",
+
+    "PickTimePeriodCategory": "Pick a Category",
 
     //Permission
     "Permission:Lyubishchev": "Lyubishchev",

@@ -92,6 +92,9 @@ public class LyubishchevDbContext :
             t.ToTable(TimePeriodConsts.DbTablePrefix + "TimePeriod", TimePeriodConsts.DbSchema);
             t.ConfigureByConvention();
             t.Property(x => x.Name).IsRequired().HasMaxLength(128);
+
+            //add the mapping for the relation
+            t.HasOne<TimePeriodCategory>().WithMany().HasForeignKey(x => x.CategoryId).IsRequired();
         });
 
         builder.Entity<TimePeriodCategory>(tc =>

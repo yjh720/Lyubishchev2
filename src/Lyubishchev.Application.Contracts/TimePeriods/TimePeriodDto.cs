@@ -12,6 +12,8 @@ namespace Lyubishchev.TimePeriods
         public DateTime Start { get; set; }
         public DateTime End { get; set; }
         public string Note { get; set; }
+        public Guid CategoryId { get; set; }
+        public string CategoryName { get; set; }
         public TimePeriodDto()
         {
             Start = DateTime.Now;

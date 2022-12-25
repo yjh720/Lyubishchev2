@@ -19,6 +19,7 @@ namespace Lyubishchev.TimePeriods
         [DataType(DataType.Date)]
         public DateTime End { get; set; }
         public string Note { get; set; }
+        public Guid CategoryId { get; set; }
         public CreateUpdateTimePeriodDto()
         {
             Start = DateTime.Now;

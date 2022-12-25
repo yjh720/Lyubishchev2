@@ -28,45 +28,50 @@ namespace Lyubishchev
 
         public async Task SeedAsync(DataSeedContext context)
         {
-            if (await _timePeriodRepository.GetCountAsync() <= 0)
-            {
-                await _timePeriodRepository.InsertAsync(
-                    new TimePeriod()
-                    {
-                        Name = "睡觉",
-                        End = DateTime.Now + TimeSpan.FromHours(1),
-                        Note = "睡觉"
-                    },
-                    autoSave: true
-                    );
 
-                await _timePeriodRepository.InsertAsync(
-                    new TimePeriod()
-                    {
-                        Name = "吃饭",
-                        End = DateTime.Now + TimeSpan.FromHours(1),
-                        Note = "吃饭"
-                    },
-                    autoSave: true
-                    );
+            if(await _timePeriodRepository.GetCountAsync() > 0)
+            {
+                return;
             }
 
             //ADD SEED DATA FOR TIMEPERIODCATEGORY
 
-            if (await _timePeriodCategoryRepository.GetCountAsync() <= 0)
-            {
-                await _timePeriodCategoryRepository.InsertAsync(
-                    await _timePeriodCategoryManager.CreateAsync(
-                        "生活日常",
-                        "固定要做的日常事务")
-                    );
+            var life = await _timePeriodCategoryRepository.InsertAsync(
+                                await _timePeriodCategoryManager.CreateAsync(
+                                    "生活日常",
+                                    "生活日常")
+                                );
 
-                await _timePeriodCategoryRepository.InsertAsync(
-                    await _timePeriodCategoryManager.CreateAsync(
-                        "招聘",
-                        "招聘")
-                    );
-            }
+            var hire = await _timePeriodCategoryRepository.InsertAsync(
+                await _timePeriodCategoryManager.CreateAsync(
+                    "招聘",
+                    "招聘")
+                );
+
+
+            //ADD SEED DATA FOR TIMEPERIOD
+
+            await _timePeriodRepository.InsertAsync(
+                new TimePeriod()
+                {
+                    Name = "睡觉",
+                    End = DateTime.Now + TimeSpan.FromHours(1),
+                    Note = "睡觉",
+                    CategoryId = life.Id
+                },
+                autoSave: true
+                ) ;
+
+            await _timePeriodRepository.InsertAsync(
+                new TimePeriod()
+                {
+                    Name = "吃饭",
+                    End = DateTime.Now + TimeSpan.FromHours(1),
+                    Note = "吃饭",
+                    CategoryId= life.Id
+                },
+                autoSave: true
+                );
 
         }
     }
