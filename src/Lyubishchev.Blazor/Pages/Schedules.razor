@@ -10,10 +10,69 @@
 @*@using Volo.Abp.AspNetCore.Components.Web*@
 @inject IStringLocalizer<LyubishchevResource> L
 @inject AbpBlazorMessageLocalizerHelper<LyubishchevResource> LH
+@*@inject DialogService DialogService*@
 @inherits AbpCrudPageBase<Lyubishchev.ITimePeriodAppService,TimePeriodDto, Guid,PagedAndSortedResultRequestDto, CreateUpdateTimePeriodDto>
 
 
+<RadzenScheduler style="height: 800px;"
+                 TItem="TimePeriodDto"
+                 Data="Entities"
+                 LoadData="@OnLoadData"
+                 StartProperty="@nameof(TimePeriodDto.Start)"
+                 EndProperty="@nameof(TimePeriodDto.End)"
+                 TextProperty="@nameof(TimePeriodDto.Name)"
+                 SelectedIndex="0"
+                 SlotRender=@OnSlotRender>
+    @* SelectedIndex -> first display is day/week/month*@
+    <RadzenDayView />
+    <RadzenWeekView />
+    <RadzenMonthView />
+</RadzenScheduler>
 
 @code {
 
+    //RadzenScheduler<TimePeriodDto> scheduler;
+    IReadOnlyList<TimePeriodCategoryLookupDto> timePeriodCategoryList = Array.Empty<TimePeriodCategoryLookupDto>();
+
+    protected override async Task OnInitializedAsync()
+    {
+        await base.OnInitializedAsync();
+        timePeriodCategoryList = (await AppService.GetTimePeriodCategoryLookupAsync()).Items;
+    }
+
+    async Task OnLoadData(SchedulerLoadDataEventArgs args)
+    {
+        await GetEntitiesAsync();
+    }
+
+    void OnSlotRender(SchedulerSlotRenderEventArgs args)
+    {
+        // Highlight today in month view
+        if (args.View.Text == "Month" && args.Start.Date == DateTime.Today)
+        {
+            args.Attributes["style"] = "background: rgba(255,220,40,.2);";
+        }
+
+        // Highlight working hours (9-19)
+        if ((args.View.Text == "Week" || args.View.Text == "Day") 
+        && args.Start.DayOfWeek != DayOfWeek.Saturday && args.Start.DayOfWeek != DayOfWeek.Sunday
+        && args.Start.Hour > 8 && args.Start.Hour < 19)
+        {
+            args.Attributes["style"] = "background: rgba(255,220,40,.2);";
+        }
+    }
+
+    async Task OnSlotSelect(SchedulerSlotSelectEventArgs args)
+    {
+
+    }
+
+    async Task OnAppointmentSelect(SchedulerAppointmentSelectEventArgs<TimePeriodDto> args)
+    {
+
+    }
+    void OnAppointmentRender(SchedulerAppointmentRenderEventArgs<TimePeriodDto> args)
+    {
+
+    }
 }

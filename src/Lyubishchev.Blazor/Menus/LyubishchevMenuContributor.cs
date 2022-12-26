@@ -54,6 +54,13 @@ public class LyubishchevMenuContributor : IMenuContributor
 
         lyubishchevMenu.AddItem(
             new ApplicationMenuItem(
+                "Lyubishchev.Schedules",
+                l["Menu:Schedules"],
+                url: "/schedules")
+            );
+
+        lyubishchevMenu.AddItem(
+            new ApplicationMenuItem(
                 "Lyubishchev.TimePeriods",
                 l["Menu:TimePeriods"],
                 url: "/timePeriods"));
