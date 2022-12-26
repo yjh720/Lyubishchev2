@@ -99,9 +99,8 @@
     </CardBody>
 </Card>
 
-
 <Modal @ref="@CreateModal">
-    <ModalBackdrop />
+@*    <ModalBackdrop />*@
     <ModalContent IsCentered="true">
         <Form>
             <ModalHeader>
@@ -163,7 +162,7 @@
                     @L["Cancel"]
                 </Button>
                 <Button Color="Color.Primary"
-                        Type="@ButtonType.Submit"
+                        Type="@Blazorise.ButtonType.Submit"
                         PreventDefaultOnSubmit="true"
                         Clicked="CreateEntityAsync">
                     @L["Save"]
@@ -174,7 +173,7 @@
 </Modal>
 
 <Modal @ref="@EditModal">
-    <ModalBackdrop />
+@*    <ModalBackdrop />*@
     <ModalContent IsCentered="true">
         <Form>
             <ModalHeader>
@@ -228,7 +227,7 @@
                     @L["Cancel"]
                 </Button>
                 <Button Color="Color.Primary"
-                        Type="@ButtonType.Submit"
+                        Type="@Blazorise.ButtonType.Submit"
                         PreventDefaultOnSubmit="true"
                         Clicked="UpdateEntityAsync">
                     @L["Save"]

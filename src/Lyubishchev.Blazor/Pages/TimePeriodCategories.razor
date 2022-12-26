@@ -5,6 +5,8 @@
 @inherits LyubishchevComponentBase
 @inject ITimePeriodCategoryAppService TimePeriodCategoryAppService
 @inject AbpBlazorMessageLocalizerHelper<LyubishchevResource> LH
+
+
 <Card>
     <CardHeader>
         <Row>
@@ -76,7 +78,7 @@
 </Card>
 
 <Modal @ref="CreateTimePeriodCategoryModal">
-    <ModalBackdrop />
+@*    <ModalBackdrop />*@
     <ModalContent IsCentered="true">
         <Form>
             <ModalHeader>
@@ -111,7 +113,7 @@
                     @L["Cancel"]
                 </Button>
                 <Button Color="Color.Primary"
-                        Type="@ButtonType.Submit"
+                        Type="@Blazorise.ButtonType.Submit"
                         PreventDefaultOnSubmit="true"
                         Clicked="CreateTimePeriodCategoryAsync">
                     @L["Save"]
@@ -122,7 +124,7 @@
 </Modal>
 
 <Modal @ref="EditTimePeriodCategoryModal">
-    <ModalBackdrop/>
+@*    <ModalBackdrop/>*@
     <ModalContent IsCentered="true">
         <Form>
             <ModalHeader>
@@ -157,7 +159,7 @@
                     @L["Cancel"]
                 </Button>
                 <Button Color="Color.Primary"
-                        Type="@ButtonType.Submit"
+                        Type="@Blazorise.ButtonType.Submit"
                         PreventDefaultOnSubmit="true"
                         Clicked="UpdateTimePeriodCategoryAsync">
                     @L["Save"]

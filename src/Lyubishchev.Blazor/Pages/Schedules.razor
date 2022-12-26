@@ -1,0 +1,19 @@
+﻿@page "/schedules"
+@attribute [Authorize(LyubishchevPermissions.TimePeriods.Default)]
+@using Lyubishchev.Permissions
+@using Microsoft.AspNetCore.Authorization
+@using Volo.Abp.Application.Dtos
+@using Lyubishchev.TimePeriods;
+@using Lyubishchev.Localization;
+@using Microsoft.Extensions.Localization
+@using Volo.Abp.BlazoriseUI
+@*@using Volo.Abp.AspNetCore.Components.Web*@
+@inject IStringLocalizer<LyubishchevResource> L
+@inject AbpBlazorMessageLocalizerHelper<LyubishchevResource> LH
+@inherits AbpCrudPageBase<Lyubishchev.ITimePeriodAppService,TimePeriodDto, Guid,PagedAndSortedResultRequestDto, CreateUpdateTimePeriodDto>
+
+
+
+@code {
+
+}
