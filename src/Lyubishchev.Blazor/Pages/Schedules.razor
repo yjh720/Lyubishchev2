@@ -68,17 +68,14 @@
                         </Field>
                     </Validation>
 
-                    <Field>
-                        <FieldLabel>@L["TimePeriod_Date"]</FieldLabel>
-                        <DateEdit TValue="DateTime" Placeholder="@DateTime.Now.ToString("m")" @bind-Date="NewEntity.Start" />
-                    </Field>
+                   
                     <Field>
                         <FieldLabel>@L["TimePeriod_Start"]</FieldLabel>
-                        <TimeEdit TValue="DateTime" Placeholder="@DateTime.Now.ToString("t")" @bind-Time="NewEntity.Start" />
+                        <DateEdit TValue="DateTime" InputMode="DateInputMode.DateTime" @bind-Date="NewEntity.Start" />
                     </Field>
                     <Field>
                         <FieldLabel>@L["TimePeriod_End"]</FieldLabel>
-                        <TimeEdit TValue="DateTime" Placeholder="@DateTime.Now.AddHours(1).ToString("t")" @bind-Time="NewEntity.End" />
+                        <DateEdit TValue="DateTime" InputMode="DateInputMode.DateTime" Placeholder="@DateTime.Now.AddHours(1).ToString("t")" @bind-Date="NewEntity.End" />
                     </Field>
                     <Field>
                         <FieldLabel>@L["TimePeriod_Note"]</FieldLabel>
@@ -139,17 +136,14 @@
                             }
                         </Select>
                     </Field>
-                    <Field>
-                        <FieldLabel>@L["TimePeriod_Date"]</FieldLabel>
-                        <DateEdit TValue="DateTime" Placeholder="@DateTime.Now.ToString("m")" @bind-Date="NewEntity.Start" />
-                    </Field>
+
                     <Field>
                         <FieldLabel>@L["TimePeriod_Start"]</FieldLabel>
-                        <TimeEdit TValue="DateTime" @bind-Time="EditingEntity.Start" />
+                        <DateEdit TValue="DateTime" InputMode="DateInputMode.DateTime" @bind-Date="EditingEntity.Start" />
                     </Field>
                     <Field>
                         <FieldLabel>@L["TimePeriod_End"]</FieldLabel>
-                        <TimeEdit TValue="DateTime" @bind-Time="EditingEntity.End" />
+                        <DateEdit TValue="DateTime" InputMode="DateInputMode.DateTime" Placeholder="@DateTime.Now.AddHours(1).ToString("t")" @bind-Date="EditingEntity.End" />
                     </Field>
                     <Field>
                         <FieldLabel>@L["TimePeriod_Note"]</FieldLabel>
