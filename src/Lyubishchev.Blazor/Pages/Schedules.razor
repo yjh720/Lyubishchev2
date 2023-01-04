@@ -14,7 +14,8 @@
 @inherits AbpCrudPageBase<Lyubishchev.ITimePeriodAppService,TimePeriodDto, Guid,PagedAndSortedResultRequestDto, CreateUpdateTimePeriodDto>
 
 
-<RadzenScheduler style="height: 800px;"
+<RadzenScheduler @ref="Scheduler"
+                 style="height: 800px;"
                  TItem="TimePeriodDto"
                  Data="Entities"
                  LoadData="@OnLoadData"
@@ -22,17 +23,160 @@
                  EndProperty="@nameof(TimePeriodDto.End)"
                  TextProperty="@nameof(TimePeriodDto.Name)"
                  SelectedIndex="0"
-                 SlotRender=@OnSlotRender>
+                 SlotRender=@OnSlotRender
+                 SlotSelect=@OnSlotSelect
+                 AppointmentSelect=@OnAppointmentSelect>
     @* SelectedIndex -> first display is day/week/month*@
     <RadzenDayView />
     <RadzenWeekView />
     <RadzenMonthView />
 </RadzenScheduler>
 
+<Modal @ref="@CreateModal">
+    @*    <ModalBackdrop />*@
+    <ModalContent IsCentered="true">
+        <Form>
+            <ModalHeader>
+                <ModalTitle>@L["TimePeriod_NewTimePeriod"]</ModalTitle>
+                <CloseButton Clicked="CloseCreateModalAsync" />
+            </ModalHeader>
+            <ModalBody>
+                <Validations @ref="@CreateValidationsRef" Model="@NewEntity" ValidateOnLoad="false">
+                    <Validation MessageLocalizer="@LH.Localize">
+                        <Field>
+                            <FieldLabel>@L["TimePeriod_Name"]</FieldLabel>
+                            <TextEdit @bind-Text="@NewEntity.Name">
+                                <Feedback>
+                                    <ValidationError />
+                                </Feedback>
+                            </TextEdit>
+                        </Field>
+                    </Validation>
+                    <Validation Validator="ValidationRule.IsSelected">
+                        <Field>
+                            <FieldLabel>@L["TimePeriodCategory"]</FieldLabel>
+                            <Select TValue="Guid" @bind-SelectedValue="@NewEntity.CategoryId">
+                                <SelectItem TValue="Guid" Value="Guid.Empty" Disabled="true"> @L["PickTimePeriodCategory"]</SelectItem>
+                                @foreach (var category in timePeriodCategoryList)
+                                {
+                                    <SelectItem TValue="Guid" Value="@category.Id">
+                                        @category.Name
+                                    </SelectItem>
+                                }
+
+                            </Select>
+                        </Field>
+                    </Validation>
+
+                    <Field>
+                        <FieldLabel>@L["TimePeriod_Date"]</FieldLabel>
+                        <DateEdit TValue="DateTime" Placeholder="@DateTime.Now.ToString("m")" @bind-Date="NewEntity.Start" />
+                    </Field>
+                    <Field>
+                        <FieldLabel>@L["TimePeriod_Start"]</FieldLabel>
+                        <TimeEdit TValue="DateTime" Placeholder="@DateTime.Now.ToString("t")" @bind-Time="NewEntity.Start" />
+                    </Field>
+                    <Field>
+                        <FieldLabel>@L["TimePeriod_End"]</FieldLabel>
+                        <TimeEdit TValue="DateTime" Placeholder="@DateTime.Now.AddHours(1).ToString("t")" @bind-Time="NewEntity.End" />
+                    </Field>
+                    <Field>
+                        <FieldLabel>@L["TimePeriod_Note"]</FieldLabel>
+                        <MemoEdit Rows="5" @bind-Text="NewEntity.Note" />
+
+                        @*<Markdown>
+                        <Toolbar>
+
+                        </Toolbar>
+                        </Markdown>*@
+
+                    </Field>
+                </Validations>
+            </ModalBody>
+            <ModalFooter>
+                <Button Color="Color.Secondary"
+                        Clicked="CloseCreateModalAsync">
+                    @L["Cancel"]
+                </Button>
+                <Button Color="Color.Primary"
+                        Type="@Blazorise.ButtonType.Submit"
+                        PreventDefaultOnSubmit="true"
+                        Clicked="CreateEntityAsync">
+                    @L["Save"]
+                </Button>
+            </ModalFooter>
+        </Form>
+    </ModalContent>
+</Modal>
+
+<Modal @ref="@EditModal">
+    <ModalContent IsCentered="true">
+        <Form>
+            <ModalHeader>
+                <ModalTitle>@EditingEntity.Name</ModalTitle>
+                <CloseButton Clicked="CloseEditModalAsync" />
+            </ModalHeader>
+            <ModalBody>
+                <Validations @ref="@EditValidationsRef" Model="@EditingEntity" ValidateOnLoad="false">
+                    <Validation MessageLocalizer="@LH.Localize">
+                        <Field>
+                            <FieldLabel>@L["TimePeriod_Name"]</FieldLabel>
+                            <TextEdit @bind-Text="@EditingEntity.Name">
+                                <Feedback>
+                                    <ValidationError />
+                                </Feedback>
+                            </TextEdit>
+                        </Field>
+                    </Validation>
+                    <Field>
+                        <FieldLabel>@L["TimePeriodCategory"]</FieldLabel>
+                        <Select TValue="Guid" @bind-SelectedValue="@EditingEntity.CategoryId">
+                            @foreach (var category in timePeriodCategoryList)
+                            {
+                                <SelectItem TValue="Guid" Value="@category.Id">
+                                    @category.Name
+                                </SelectItem>
+                            }
+                        </Select>
+                    </Field>
+                    <Field>
+                        <FieldLabel>@L["TimePeriod_Date"]</FieldLabel>
+                        <DateEdit TValue="DateTime" Placeholder="@DateTime.Now.ToString("m")" @bind-Date="NewEntity.Start" />
+                    </Field>
+                    <Field>
+                        <FieldLabel>@L["TimePeriod_Start"]</FieldLabel>
+                        <TimeEdit TValue="DateTime" @bind-Time="EditingEntity.Start" />
+                    </Field>
+                    <Field>
+                        <FieldLabel>@L["TimePeriod_End"]</FieldLabel>
+                        <TimeEdit TValue="DateTime" @bind-Time="EditingEntity.End" />
+                    </Field>
+                    <Field>
+                        <FieldLabel>@L["TimePeriod_Note"]</FieldLabel>
+                        <MemoEdit Rows="5" @bind-Text="EditingEntity.Note" />
+                    </Field>
+                </Validations>
+            </ModalBody>
+            <ModalFooter>
+                <Button Color="Color.Secondary"
+                        Clicked="CloseEditModalAsync">
+                    @L["Cancel"]
+                </Button>
+                <Button Color="Color.Primary"
+                        Type="@Blazorise.ButtonType.Submit"
+                        PreventDefaultOnSubmit="true"
+                        Clicked="UpdateEntityAsync">
+                    @L["Save"]
+                </Button>
+            </ModalFooter>
+        </Form>
+    </ModalContent>
+</Modal>
+
 @code {
 
-    //RadzenScheduler<TimePeriodDto> scheduler;
-    IReadOnlyList<TimePeriodCategoryLookupDto> timePeriodCategoryList = Array.Empty<TimePeriodCategoryLookupDto>();
+    private RadzenScheduler<TimePeriodDto> Scheduler { get; set; }
+    private IReadOnlyList<TimePeriodCategoryLookupDto> timePeriodCategoryList = Array.Empty<TimePeriodCategoryLookupDto>();
 
     protected override async Task OnInitializedAsync()
     {
@@ -54,7 +198,7 @@
         }
 
         // Highlight working hours (9-19)
-        if ((args.View.Text == "Week" || args.View.Text == "Day") 
+        if ((args.View.Text == "Week" || args.View.Text == "Day")
         && args.Start.DayOfWeek != DayOfWeek.Saturday && args.Start.DayOfWeek != DayOfWeek.Sunday
         && args.Start.Hour > 8 && args.Start.Hour < 19)
         {
@@ -64,12 +208,14 @@
 
     async Task OnSlotSelect(SchedulerSlotSelectEventArgs args)
     {
-
+        await OpenCreateModalAsync();
+        await Scheduler.Reload();
     }
 
     async Task OnAppointmentSelect(SchedulerAppointmentSelectEventArgs<TimePeriodDto> args)
     {
-
+        await OpenEditModalAsync(args.Data);
+        await Scheduler.Reload();
     }
     void OnAppointmentRender(SchedulerAppointmentRenderEventArgs<TimePeriodDto> args)
     {
